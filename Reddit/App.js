@@ -1,15 +1,25 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ListView from "./components/ListView";
 
 export default class App extends React.Component {
+  getPosts = async () => {
+    const list = await fetch("https://api.reddit.com/r/pics/new.json");
+    const rawData = JSON.parse(list._bodyInit).data.children;
+    return rawData.map(post => {
+      return {
+        author: post.data.author,
+        created: post.data.created,
+        score: post.data.score,
+        thumbnail: post.data.thumbnail,
+        title: post.data.title,
+        comments: post.data.num_comments
+      };
+    });
+  };
+  // =========== RENDERING
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
+    return <ListView post={this.getPosts()} />;
   }
 }
 
