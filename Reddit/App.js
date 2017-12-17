@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ListView from "./components/ListView";
-
 export default class App extends React.Component {
   getPosts = async () => {
     const list = await fetch("https://api.reddit.com/r/pics/new.json");

@@ -12,9 +12,11 @@ export default class ListView extends React.Component {
     const postsInfo = await this.props.post;
     this.setState({ posts: postsInfo });
   };
+
   // =========== RENDERING
   render() {
     if (this.state.posts.length === 0) this.getInfo();
+
     return (
       <View>
         <List>
