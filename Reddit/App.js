@@ -8,6 +8,7 @@ export default class App extends React.Component {
     const rawData = JSON.parse(list._bodyInit).data.children;
     return rawData.map(post => {
       return {
+        id: post.data.id,
         author: post.data.author,
         created: post.data.created,
         score: post.data.score,
