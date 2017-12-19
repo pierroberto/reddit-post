@@ -4,7 +4,6 @@ import { List, ListItem } from "react-native-elements";
 import ItemView from "./ItemView";
 // import { Stack1 } from "../config/routes";
 import { StackNavigator } from "react-navigation";
-const util = require("util");
 
 export default class ListView extends React.Component {
   constructor(props) {
@@ -15,6 +14,7 @@ export default class ListView extends React.Component {
     const list = await fetch("https://api.reddit.com/r/pics/new.json");
     const rawData = JSON.parse(list._bodyInit).data.children;
     const postsInfo = rawData.map(post => {
+      console.log(post.data.permalink);
       return {
         id: post.data.id,
         author: post.data.author,
@@ -22,7 +22,8 @@ export default class ListView extends React.Component {
         score: post.data.score,
         thumbnail: post.data.thumbnail,
         title: post.data.title,
-        comments: post.data.num_comments
+        comments: post.data.num_comments,
+        link: `https://i.reddit.com${post.data.permalink}`
       };
     });
     this.setState({ posts: postsInfo });

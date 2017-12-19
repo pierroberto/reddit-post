@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
-import { List, ListItem } from "react-native-elements";
+import { View, Text, WebView } from "react-native";
+
 import { StackNavigator } from "react-navigation";
 
 export default class PostDetails extends React.Component {
@@ -8,16 +8,17 @@ export default class PostDetails extends React.Component {
     super(props);
   }
   static navigationOptions = {
-    title: "Full List"
+    title: "Back"
   };
+
   // =========== RENDERING
   render() {
-    {
-      console.log("HERE", this.props.navigation.state.params.post);
-    }
-    {
-      console.log("post details");
-    }
-    return <Text>Hello</Text>;
+    console.log(this.props.navigation.state.params.post.link);
+    return (
+      <WebView
+        source={{ uri: this.props.navigation.state.params.post.link }}
+        style={{ marginTop: 20 }}
+      />
+    );
   }
 }
