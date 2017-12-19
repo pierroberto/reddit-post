@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import { List, ListItem } from "react-native-elements";
 import ItemView from "./ItemView";
-// import { Stack1 } from "../config/routes";
 import { StackNavigator } from "react-navigation";
 
 export default class ListView extends React.Component {
@@ -10,6 +9,9 @@ export default class ListView extends React.Component {
     super(props);
     this.state = { posts: [], refreshing: false };
   }
+  static navigationOptions = {
+    title: "Latest Reddit"
+  };
   getPosts = async () => {
     const list = await fetch("https://api.reddit.com/r/pics/new.json");
     const rawData = JSON.parse(list._bodyInit).data.children;
@@ -29,7 +31,6 @@ export default class ListView extends React.Component {
   };
 
   handleRefresh = async () => {
-    console.log("hello");
     this.setState({
       refreshing: true,
       posts: []
@@ -37,11 +38,10 @@ export default class ListView extends React.Component {
   };
   // =========== RENDERING
   render() {
-    console.log("refreshing... ", this.state.posts.length);
     const { navigate } = this.props.navigation;
     if (!this.state.posts.length) this.getPosts();
     return (
-      <View>
+      <View style={{ backgroundColor: "#D2E3F6" }}>
         <List>
           <FlatList
             data={this.state.posts}

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, WebView } from "react-native";
-
-import { StackNavigator } from "react-navigation";
+import { WebView } from "react-native";
 
 export default class PostDetails extends React.Component {
   constructor(props) {
@@ -13,11 +11,11 @@ export default class PostDetails extends React.Component {
 
   // =========== RENDERING
   render() {
-    console.log(this.props.navigation.state.params.post.link);
     return (
       <WebView
         source={{ uri: this.props.navigation.state.params.post.link }}
         style={{ marginTop: 20 }}
+        scalesPageToFit={true}
       />
     );
   }
