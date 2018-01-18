@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList, Button, Picker } from "react-native";
+import { StyleSheet, Text, View, FlatList, Picker } from "react-native";
 import { List, ListItem } from "react-native-elements";
 import ItemView from "./ItemView";
 import { StackNavigator } from "react-navigation";
@@ -15,7 +15,6 @@ export default class ListView extends React.Component {
   getPosts = async () => {
     const list = await fetch("https://api.reddit.com/r/pics/new.json");
     const rawData = JSON.parse(list._bodyInit).data.children;
-    console.log("state now, gettin posts... ", this.state.sort.order);
     if (this.state.sort.order) this.sortPosts(rawData);
     const postsInfo = rawData.map(post => {
       return {
@@ -62,22 +61,20 @@ export default class ListView extends React.Component {
   };
   // =========== RENDERING
   render() {
-    console.log("state", this.state.sort);
     const { navigate } = this.props.navigation;
     if (!this.state.posts.length || this.state.sort.order) this.getPosts();
     return (
       <View style={{ backgroundColor: "#D2E3F6" }}>
         <Picker
           selectedValue={this.state.sort}
-          onValueChange={(itemValue, itemIndex) =>
+          onValueChange={itemValue =>
             this.setState({ sort: { order: itemValue } })
           }
         >
-          <Picker.Item label="no sort" value={null} />
-          <Picker.Item label="new" value="new" />
-          <Picker.Item label="hot" value="hot" />
-          <Picker.Item label="top" value="top" />
-          <Picker.Item label="controversial" value="controversial" />
+          <Picker.Item label="Sort posts by..." value={null} />
+          <Picker.Item label="New" value="new" />
+          <Picker.Item label="Hot" value="hot" />
+          <Picker.Item label="Top" value="top" />
         </Picker>
         <List>
           <FlatList
